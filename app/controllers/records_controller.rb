@@ -8,6 +8,7 @@ class RecordsController < ApplicationController
     @record = Record.new(record_params)
     if @record.save
       #handle successful creation
+      flash[:success] = "BAM"
       render json: @record
     else
       #handle problem
@@ -16,9 +17,13 @@ class RecordsController < ApplicationController
     end
   end
 
-  # def new
-  #   @record = Record.new
-  # end
+  def destroy
+    @record = Record.find(params[:id])
+    puts @record.title.to_s + " is getting destroyed!"
+    @record.destroy
+    head :no_content
+  end
+
 
   private
 

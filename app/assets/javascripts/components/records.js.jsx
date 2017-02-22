@@ -12,21 +12,15 @@ var Records = React.createClass({
     }
   },
   addRecord: function (record) {
-    records = this.state.records.slice()
+    var records = this.state.records.slice()
     records.push(record)
     this.setState({records:records})
-//     addRecord: (record) ->
-//   records = @state.records.slice()
-//   records.push record
-//   @setState records: records
-// render: ->
-//   React.DOM.div
-//     className: 'records'
-//     React.DOM.h2
-//       className: 'title'
-//       'Records'
-//     React.createElement RecordForm, handleNewRecord: @addRecord
-//     React.DOM.hr null
+  },
+  deleteRecord: function(record) {
+    var records = this.state.records.slice()
+    var index = records.indexOf(record)
+    records.splice(index,1)
+    this.setState({records:records})
   },
   gained: function() {
     var gained = this.state.records.filter(function(val) {
@@ -64,11 +58,12 @@ var Records = React.createClass({
               <th>Date</th>
               <th>Title</th>
               <th>Amount</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {this.state.records.map(function(record) {
-                   return <Record key={record.id} record={record}/>
+                   return <Record key={record.id} record={record} handleDeleteRecord={this.deleteRecord}/>
                   }.bind(this)
                 )
               }
