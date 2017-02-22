@@ -8,14 +8,17 @@ class RecordsController < ApplicationController
     @record = Record.new(record_params)
     if @record.save
       #handle successful creation
+      render json: @record
     else
       #handle problem
+      flash[:danger] = "Something went wrong. :("
+      render 'new'
     end
   end
 
-  def new
-    @record = Record.new
-  end
+  # def new
+  #   @record = Record.new
+  # end
 
   private
 

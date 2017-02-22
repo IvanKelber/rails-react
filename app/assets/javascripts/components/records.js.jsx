@@ -11,10 +11,28 @@ var Records = React.createClass({
       records: []
     }
   },
+  addRecord: function (record) {
+    records = this.state.records.slice()
+    records.push(record)
+    this.setState({records:records})
+//     addRecord: (record) ->
+//   records = @state.records.slice()
+//   records.push record
+//   @setState records: records
+// render: ->
+//   React.DOM.div
+//     className: 'records'
+//     React.DOM.h2
+//       className: 'title'
+//       'Records'
+//     React.createElement RecordForm, handleNewRecord: @addRecord
+//     React.DOM.hr null
+  },
   render: function() {
     return (
       <div className="records">
         <h2 className="title">Records</h2>
+        <RecordForm handleNewRecord={this.addRecord} />
         <table className="table table-bordered">
           <thead>
             <tr>
