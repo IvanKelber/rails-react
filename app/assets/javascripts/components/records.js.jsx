@@ -28,11 +28,36 @@ var Records = React.createClass({
 //     React.createElement RecordForm, handleNewRecord: @addRecord
 //     React.DOM.hr null
   },
+  gained: function() {
+    var gained = this.state.records.filter(function(val) {
+          return val.amount >= 0
+        });
+    return gained.reduce(function(prev, curr) {
+      return prev + parseFloat(curr.amount);
+      }, 0)
+  },
+  spent: function() {
+    var spent = this.state.records.filter(function(val) {
+          return val.amount < 0
+        });
+    return spent.reduce(function(prev, curr) {
+      return prev + parseFloat(curr.amount);
+      }, 0)
+  },
+  balance: function() {
+    return this.spent() + this.gained()
+  },
   render: function() {
     return (
       <div className="records">
         <h2 className="title">Records</h2>
+        <div className="row">
+          <AmountBox type="success" text="Gained" amount={this.gained()}/>
+          <AmountBox type="danger" text="Spent" amount={this.spent()}/>
+          <AmountBox type="info" text="Balance" amount={this.balance()}/>
+        </div>
         <RecordForm handleNewRecord={this.addRecord} />
+        <br/>
         <table className="table table-bordered">
           <thead>
             <tr>
