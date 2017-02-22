@@ -1,4 +1,4 @@
-Record = React.createClass({
+var Record = React.createClass({
   render: function() {
     return(
       <tr>
