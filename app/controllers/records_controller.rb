@@ -8,12 +8,11 @@ class RecordsController < ApplicationController
     @record = Record.new(record_params)
     if @record.save
       #handle successful creation
-      flash[:success] = "BAM"
       render json: @record
     else
       #handle problem
-      flash[:danger] = "Something went wrong. :("
-      render 'new'
+      render json: @record.errors, status: :unprocessable_entity
+
     end
   end
 
@@ -23,6 +22,14 @@ class RecordsController < ApplicationController
     head :no_content
   end
 
+  def update
+    @record = Record.find(params[:id])
+    if @record.update(record_params)
+      render json: @record
+    else
+      render json: @record.errors, status: :unprocessable_entity
+    end
+  end
 
   private
 
